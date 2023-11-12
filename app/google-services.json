@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "893731559270",
+    "project_id": "nowon-tourist",
+    "storage_bucket": "nowon-tourist.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893731559270:android:e53f2124c7e5a6e6b71aa7",
+        "android_client_info": {
+          "package_name": "com.nowontourist.tourist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893731559270-2r6q7due1tmlum1fsrfph4qig26m5ffs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCH0eHWpOz82uyviJvx5BqV-xGRXloIIL8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "893731559270-2r6q7due1tmlum1fsrfph4qig26m5ffs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
