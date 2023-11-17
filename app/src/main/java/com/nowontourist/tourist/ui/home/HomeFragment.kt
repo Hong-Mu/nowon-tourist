@@ -50,9 +50,9 @@ class HomeFragment : Fragment() {
             textView.text = "${month}월"
 
             textView.setOnClickListener {
-                prevIndex = index
                 monthList[prevIndex].backgroundTintList = yellow
                 textView.backgroundTintList = orange
+                prevIndex = index
                 // 이벤트 목록 업데이트
             }
         }

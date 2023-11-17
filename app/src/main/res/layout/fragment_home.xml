@@ -16,9 +16,10 @@
         android:orientation="vertical">
 
         <TextView
-            style="@style/TextAppearance.NT.Headline2"
+            style="@style/TextAppearance.NT.Headline1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="힐링타운 스탬프투어"
             android:textColor="@color/white" />
 
@@ -27,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
             android:background="@drawable/bg_round_16"
             android:backgroundTint="@color/green_light"
