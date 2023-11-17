@@ -4,10 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cyan"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="24dp"
     tools:context=".ui.auth.SignInActivity">
+
+    <include
+        layout="@layout/layout_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <EditText
         android:id="@+id/input_email"
@@ -20,6 +27,7 @@
         android:id="@+id/input_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:hint="비밀번호"
         android:inputType="textPassword" />
 
@@ -27,12 +35,17 @@
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="로그인" />
 
     <TextView
         android:id="@+id/text_sign_up"
+        style="@style/TextAppearance.NT.Subtitle2_Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="회원가입" />
+        android:layout_gravity="end"
+        android:layout_marginTop="16dp"
+        android:text="회원가입"
+        android:textColor="@color/gray" />
 
 </LinearLayout>

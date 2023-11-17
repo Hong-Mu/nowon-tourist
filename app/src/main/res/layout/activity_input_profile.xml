@@ -4,16 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cyan"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="24dp"
     tools:context=".ui.auth.InputProfileActivity">
 
+    <include
+        layout="@layout/layout_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/btn_upload_profile"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        app:cardCornerRadius="99dp">
+        app:cardCornerRadius="99dp"
+        app:cardElevation="0dp">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -37,6 +45,7 @@
         android:id="@+id/input_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:hint="이름"
         android:inputType="text" />
 
@@ -44,6 +53,7 @@
         android:id="@+id/btn_sign_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="완료" />
 
 
