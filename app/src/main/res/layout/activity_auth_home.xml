@@ -4,26 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/cyan"
     android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp"
     tools:context=".ui.auth.AuthHomeActivity">
+
+    <include
+        layout="@layout/layout_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
 
     <Button
         android:id="@+id/btn_login"
-        android:text="로그인"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="로그인" />
 
     <Button
         android:id="@+id/btn_skip"
-        android:text="건너뛰기"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/purple"
+        android:text="건너뛰기" />
 
     <Button
         android:id="@+id/btn_google_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/white"
         android:text="구글 로그인"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
+        android:textColor="@color/black" />
 </LinearLayout>
