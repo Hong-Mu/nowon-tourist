@@ -22,6 +22,9 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/green"
+        app:itemIconTint="@color/color_main_menu"
+        app:itemTextColor="@color/color_main_menu"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_main" />
 </LinearLayout>
