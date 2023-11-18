@@ -43,9 +43,8 @@ class SignUpActivity : AppCompatActivity() {
 
         auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                startActivity(Intent(this, MainActivity::class.java).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                })
+                startActivity(Intent(this, InputProfileActivity::class.java))
+                finish()
             }.addOnFailureListener {
                 Snackbar.make(binding.root, it.localizedMessage, Snackbar.LENGTH_SHORT).show()
             }
