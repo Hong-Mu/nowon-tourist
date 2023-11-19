@@ -9,19 +9,27 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.android.gms.auth.api.identity.SignInCredential
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 import com.nowontourist.tourist.R
 import com.nowontourist.tourist.databinding.ActivityAuthHomeBinding
 import com.nowontourist.tourist.ui.MainActivity
+import com.nowontourist.tourist.util.SharedPreferencesManager
+import com.nowontourist.tourist.util.firebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AuthHomeActivity : AppCompatActivity() {
+    @Inject lateinit var prefManger: SharedPreferencesManager
     private val binding by lazy { ActivityAuthHomeBinding.inflate(layoutInflater) }
-    private lateinit var auth: FirebaseAuth
     private lateinit var oneTapClient: SignInClient
     private lateinit var signInRequest: BeginSignInRequest
 
@@ -30,40 +38,32 @@ class AuthHomeActivity : AppCompatActivity() {
             if (result.resultCode == RESULT_OK) {
                 try {
                     val credential = oneTapClient.getSignInCredentialFromIntent(result.data)
-                    val idToken = credential.googleIdToken
-                    if(idToken != null) {
-                        val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
-                        auth.signInWithCredential(firebaseCredential)
-                            .addOnSuccessListener {
-                                startActivity(Intent(this, InputProfileActivity::class.java))
-                            }.addOnFailureListener {
-                                Snackbar.make(binding.root, it.localizedMessage, Snackbar.LENGTH_SHORT).show()
-                            }
-                    }
+                    signInWithCredential(credential)
                 } catch (exception: ApiException) {
                     Snackbar.make(binding.root, exception.localizedMessage, Snackbar.LENGTH_SHORT).show()
                 }
             }
         }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        auth = Firebase.auth
         initGoogleAuth()
-
 
         binding.btnLogin.setOnClickListener {
             startActivity(Intent(this, SignInActivity::class.java))
         }
 
         binding.btnSkip.setOnClickListener {
+            prefManger.putBoolean(SharedPreferencesManager.KEY_AUTH_SKIPPED, true)
             startActivity(Intent(this, MainActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             })
         }
 
         binding.btnGoogleLogin.setOnClickListener {
-            oneTapClient.beginSignIn(signInRequest)
+            oneTapClient
+                .beginSignIn(signInRequest)
                 .addOnSuccessListener(this) { result ->
                     try {
                         oneTapClientLauncher.launch(IntentSenderRequest.Builder(result.pendingIntent.intentSender).build())
@@ -78,6 +78,7 @@ class AuthHomeActivity : AppCompatActivity() {
     }
 
     private fun initGoogleAuth() {
+
         oneTapClient = Identity.getSignInClient(this)
         signInRequest = BeginSignInRequest.builder()
             .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
@@ -91,5 +92,20 @@ class AuthHomeActivity : AppCompatActivity() {
                     .build())
             .setAutoSelectEnabled(true)
             .build()
+    }
+
+    private fun signInWithCredential(credential: SignInCredential) {
+        val idToken = credential.googleIdToken
+        if(idToken != null) {
+            val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
+            firebaseAuth.signInWithCredential(firebaseCredential)
+                .addOnSuccessListener {
+                    startActivity(Intent(this, MainActivity::class.java).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    })
+                }.addOnFailureListener {
+                    Snackbar.make(binding.root, it.localizedMessage, Snackbar.LENGTH_SHORT).show()
+                }
+        }
     }
 }
