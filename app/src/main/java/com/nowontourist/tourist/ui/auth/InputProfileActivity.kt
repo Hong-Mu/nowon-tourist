@@ -17,13 +17,13 @@ import com.google.firebase.storage.storage
 import com.nowontourist.tourist.databinding.ActivityInputProfileBinding
 import com.nowontourist.tourist.ui.MainActivity
 import com.nowontourist.tourist.util.FirebaseUtil
+import com.nowontourist.tourist.util.firebaseAuth
+import com.nowontourist.tourist.util.firebaseDatabase
+import com.nowontourist.tourist.util.firebaseStorage
 import com.nowontourist.tourist.util.uploadUserProfile
 
 class InputProfileActivity : AppCompatActivity() {
     private val binding by lazy { ActivityInputProfileBinding.inflate(layoutInflater) }
-    private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
-    private lateinit var storage: FirebaseStorage
 
     private val imageLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -36,9 +36,6 @@ class InputProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        auth = Firebase.auth
-        db = Firebase.firestore
-        storage = Firebase.storage
 
         binding.btnUploadProfile.setOnClickListener {
             imageLauncher.launch(Intent().apply {
@@ -48,17 +45,19 @@ class InputProfileActivity : AppCompatActivity() {
         }
 
         binding.btnSignUp.setOnClickListener {
-            auth.currentUser?.let {
+            firebaseAuth.currentUser?.let {
                 val name = binding.inputName.text.toString()
                 saveUserInfo(it.uid, it.email, name)
             }
         }
     }
 
+
+
     // TODO: 로딩 프로그래스바 추가
     private fun uploadProfile(uri: Uri?) {
         uri?.let {
-            storage.uploadUserProfile(auth.currentUser?.uid, it)
+            firebaseStorage.uploadUserProfile(firebaseAuth.currentUser?.uid, it)
                 .addOnSuccessListener {  _ ->
                     Glide.with(this).load(it).into(binding.imageProfile)
                 }.addOnFailureListener { e ->
@@ -73,13 +72,11 @@ class InputProfileActivity : AppCompatActivity() {
             FirebaseUtil.KEY_NAME to name,
         )
 
-        db.collection(FirebaseUtil.COLLECTION_USERS)
+        firebaseDatabase.collection(FirebaseUtil.COLLECTION_USERS)
             .document(uid)
             .set(user)
             .addOnSuccessListener {
-                startActivity(Intent(this, MainActivity::class.java).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                })
+                finish()
             }.addOnFailureListener { e ->
                 Snackbar.make(binding.root, e.localizedMessage, Snackbar.LENGTH_SHORT).show()
             }

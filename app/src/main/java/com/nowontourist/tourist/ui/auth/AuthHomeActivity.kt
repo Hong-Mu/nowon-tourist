@@ -21,11 +21,15 @@ import com.google.firebase.firestore.firestore
 import com.nowontourist.tourist.R
 import com.nowontourist.tourist.databinding.ActivityAuthHomeBinding
 import com.nowontourist.tourist.ui.MainActivity
+import com.nowontourist.tourist.util.SharedPreferencesManager
+import com.nowontourist.tourist.util.firebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AuthHomeActivity : AppCompatActivity() {
+    @Inject lateinit var prefManger: SharedPreferencesManager
     private val binding by lazy { ActivityAuthHomeBinding.inflate(layoutInflater) }
-    private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
     private lateinit var oneTapClient: SignInClient
     private lateinit var signInRequest: BeginSignInRequest
 
@@ -44,8 +48,6 @@ class AuthHomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        auth = Firebase.auth
-        db = Firebase.firestore
         initGoogleAuth()
 
         binding.btnLogin.setOnClickListener {
@@ -53,6 +55,7 @@ class AuthHomeActivity : AppCompatActivity() {
         }
 
         binding.btnSkip.setOnClickListener {
+            prefManger.putBoolean(SharedPreferencesManager.KEY_AUTH_SKIPPED, true)
             startActivity(Intent(this, MainActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             })
@@ -95,10 +98,11 @@ class AuthHomeActivity : AppCompatActivity() {
         val idToken = credential.googleIdToken
         if(idToken != null) {
             val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
-            auth.signInWithCredential(firebaseCredential)
+            firebaseAuth.signInWithCredential(firebaseCredential)
                 .addOnSuccessListener {
-                    startActivity(Intent(this, InputProfileActivity::class.java))
-                    finish()
+                    startActivity(Intent(this, MainActivity::class.java).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    })
                 }.addOnFailureListener {
                     Snackbar.make(binding.root, it.localizedMessage, Snackbar.LENGTH_SHORT).show()
                 }

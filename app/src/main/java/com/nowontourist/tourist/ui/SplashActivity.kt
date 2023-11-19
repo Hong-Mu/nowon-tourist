@@ -13,18 +13,20 @@ import com.nowontourist.tourist.databinding.ActivitySplashBinding
 import com.nowontourist.tourist.ui.auth.AuthHomeActivity
 import com.nowontourist.tourist.ui.auth.InputProfileActivity
 import com.nowontourist.tourist.util.FirebaseUtil
+import com.nowontourist.tourist.util.SharedPreferencesManager
+import com.nowontourist.tourist.util.firebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
+    @Inject lateinit var prefManger: SharedPreferencesManager
     private val binding by lazy { ActivitySplashBinding.inflate(layoutInflater) }
-    private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        auth = Firebase.auth
-        db = Firebase.firestore
 
         // 3초 후 실행
         lifecycleScope.launch {
@@ -34,24 +36,20 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun checkAuth() {
-        if(auth.currentUser != null) {
-            val ref = db.collection(FirebaseUtil.COLLECTION_USERS).document(auth.currentUser!!.uid)
-            ref.get().addOnSuccessListener { snapShot ->
-                if(snapShot.exists()) {
-                    startActivity(Intent(this, MainActivity::class.java).apply {
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    })
-                } else {
-                    startActivity(Intent(this, InputProfileActivity::class.java))
-                    finish()
-                }
-            }.addOnFailureListener {
-                // TODO 예외 처리
-            }
+        if(prefManger.getBoolean(SharedPreferencesManager.KEY_AUTH_SKIPPED)) {
+            startActivity(Intent(this, MainActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            })
+            return
+        }
 
-        } else {
-            startActivity(Intent(this@SplashActivity, AuthHomeActivity::class.java))
+        if(firebaseAuth.currentUser == null) {
+            startActivity(Intent(this, AuthHomeActivity::class.java))
             finish()
+        } else {
+            startActivity(Intent(this, MainActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            })
         }
     }
 }

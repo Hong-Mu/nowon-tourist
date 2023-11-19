@@ -9,14 +9,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.nowontourist.tourist.databinding.ActivitySignUpBinding
 import com.nowontourist.tourist.ui.MainActivity
+import com.nowontourist.tourist.util.firebaseAuth
 
 class SignUpActivity : AppCompatActivity() {
     private val binding by lazy { ActivitySignUpBinding.inflate(layoutInflater) }
-    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        auth = Firebase.auth
 
         // 회원가입 버튼
         binding.btnSignUp.setOnClickListener {
@@ -41,10 +40,11 @@ class SignUpActivity : AppCompatActivity() {
             return
         }
 
-        auth.createUserWithEmailAndPassword(email, password)
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                startActivity(Intent(this, InputProfileActivity::class.java))
-                finish()
+                startActivity(Intent(this, MainActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                })
             }.addOnFailureListener {
                 Snackbar.make(binding.root, it.localizedMessage, Snackbar.LENGTH_SHORT).show()
             }
