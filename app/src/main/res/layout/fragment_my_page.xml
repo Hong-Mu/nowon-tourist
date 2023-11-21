@@ -1,51 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="24dp"
-    tools:context=".ui.mypage.MyPageFragment">
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/btn_upload_profile"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        app:cardCornerRadius="99dp"
-        app:cardElevation="0dp">
-
-        <FrameLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="24dp"
+                tools:context=".ui.mypage.MyPageFragment">
+    <TextView
+            android:text="마이페이지"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mypagetxt"
+            android:layout_gravity="start"
+            android:textStyle="bold"
+            android:textSize="30sp"/>
+    <TextView
+            android:text="당신을 표현해보세요!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mypagetxt"
+            android:id="@+id/textView3"/>
+    <TextView
+            android:text="수정하기"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:id="@+id/editinfo"/>
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#E3E3E3">
+            android:gravity="center"
+            android:padding="24dp"
+            tools:context=".ui.mypage.MyPageFragment" android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/image_profile"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+        <androidx.cardview.widget.CardView
+                android:id="@+id/btn_upload_profile"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                app:cardCornerRadius="99dp"
+                app:cardElevation="0dp">
 
-            <TextView
-                android:id="@+id/text_upload"
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#E3E3E3">
+
+                <ImageView
+                        android:id="@+id/image_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                <TextView
+                        android:id="@+id/text_upload"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text=""/>
+
+            </FrameLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+                android:id="@+id/text_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="" />
-        </FrameLayout>
+                android:layout_marginBottom="18dp"
+                android:layout_marginTop="18dp"
+                android:text="이름"/>
+        <TextView
+                android:id="@+id/galleryphoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="18dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginRight="115dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="나의사진"/>
+        <TextView
+                android:id="@+id/maximize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="18dp"
+                android:layout_marginLeft="115dp"
+                android:text="전체보기"/>
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+        />
+        <Button
+                android:id="@+id/btn_auth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="로그아웃"/>
 
-    </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/text_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="이름" />
-
-    <Button
-        android:id="@+id/btn_auth"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="로그아웃" />
-
-</LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
