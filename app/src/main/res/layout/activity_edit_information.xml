@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+            android:text="마이페이지"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/myp"
+            android:layout_gravity="start"
+            android:textStyle="bold"
+            android:textSize="30sp"/>
+    <TextView
+            android:text="당신을 표현해보세요!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/myp"
+            android:id="@+id/textView4"/>
+
+
+
+    <TextView
+            android:id="@+id/profilephoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:layout_marginTop="180dp"
+            android:layout_marginRight="115dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="프로필사진"/>
+
+
+    <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="300dp"
+            android:hint="이름을 입력하세요"/>
+    <EditText
+            android:id="@+id/editTextPhoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextName"
+            android:layout_marginTop="30dp"
+            android:hint="전화번호를 입력하세요"/>
+    <EditText
+            android:id="@+id/editTextNickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextPhoneNumber"
+            android:layout_marginTop="30dp"
+            android:hint="닉네임을 입력하세요"/>
+    <Button
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:text="수정하기"
+            android:layout_marginTop="600dp"/>
+    <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_toRightOf="@+id/profilephoto"
+            android:layout_marginTop="160dp"
+            android:id="@+id/imageView"/>
+
+</RelativeLayout>
