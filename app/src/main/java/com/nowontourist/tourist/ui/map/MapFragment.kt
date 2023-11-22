@@ -12,6 +12,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.nowontourist.tourist.R
 import com.nowontourist.tourist.databinding.FragmentMapBinding
+import com.nowontourist.tourist.ui.dialog.StampDialog
 
 class MapFragment : Fragment(), OnMapReadyCallback {
     private var _binding: FragmentMapBinding? = null
@@ -21,12 +22,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var townView: View
     private val townBottomSheet by lazy { BottomSheetDialog(requireContext()) }
 
+    private val stampDialog by lazy { StampDialog() }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val mapFragment = activity?.supportFragmentManager
             ?.findFragmentById(R.id.map) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
+
+        binding.btnStamp.setOnClickListener { stampDialog.show(parentFragmentManager, "stamp") }
 
         initTown()
     }
