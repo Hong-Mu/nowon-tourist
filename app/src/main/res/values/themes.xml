@@ -5,6 +5,7 @@
         <item name="buttonStyle">@style/Theme.NowonTourist.Button</item>
         <item name="editTextStyle">@style/Theme.NowonTourist.EditText</item>
         <item name="android:statusBarColor">@color/green</item>
+        <item name="bottomSheetDialogTheme">@style/Theme.NowonTourist.BottomSheetDialog</item>
     </style>
 
     <style name="Theme.NowonTourist" parent="Base.Theme.NowonTourist" />
