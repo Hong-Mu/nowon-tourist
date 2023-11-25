@@ -3,6 +3,7 @@ package com.nowontourist.tourist.ui.auth
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -54,14 +55,17 @@ class InputProfileActivity : AppCompatActivity() {
 
 
 
-    // TODO: 로딩 프로그래스바 추가
     private fun uploadProfile(uri: Uri?) {
         uri?.let {
+            binding.progressBar.visibility = View.VISIBLE
             firebaseStorage.uploadUserProfile(firebaseAuth.currentUser?.uid, it)
                 .addOnSuccessListener {  _ ->
                     Glide.with(this).load(it).into(binding.imageProfile)
+                    binding.textUpload.text = ""
                 }.addOnFailureListener { e ->
                     Snackbar.make(binding.root, e.localizedMessage, Snackbar.LENGTH_SHORT).show()
+                }.addOnCompleteListener {
+                    binding.progressBar.visibility = View.INVISIBLE
                 }
         }
     }

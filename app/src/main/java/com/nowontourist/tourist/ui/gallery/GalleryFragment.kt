@@ -13,12 +13,11 @@ import com.nowontourist.tourist.databinding.FragmentGalleryBinding
 class GalleryFragment : Fragment() {
     private var _binding: FragmentGalleryBinding? = null
     private val binding get() = _binding!!
-    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -26,7 +25,6 @@ class GalleryFragment : Fragment() {
     // 여기에 코드 작성
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        auth = Firebase.auth
 
     }
 

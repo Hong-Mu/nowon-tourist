@@ -1,104 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="24dp"
-                tools:context=".ui.mypage.MyPageFragment">
-    <TextView
-            android:text="마이페이지"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/mypagetxt"
-            android:layout_gravity="start"
-            android:textStyle="bold"
-            android:textSize="30sp"/>
-    <TextView
-            android:text="당신을 표현해보세요!"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/mypagetxt"
-            android:id="@+id/textView3"/>
-    <TextView
-            android:text="수정하기"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:id="@+id/editinfo"/>
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:padding="24dp"
-            tools:context=".ui.mypage.MyPageFragment" android:orientation="vertical">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="24dp"
+    tools:context=".ui.mypage.MyPageFragment">
 
-        <androidx.cardview.widget.CardView
+    <TextView
+        android:id="@+id/text_title"
+        style="@style/TextAppearance.NT.Headline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="마이페이지"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_sub_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="당신을 표현해 보세요!"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_title" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_auth"
+        app:layout_constraintTop_toBottomOf="@id/text_sub_title">
+
+        <ImageView
+            android:id="@+id/image_auth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:src="@drawable/illust_auth"
+            android:visibility="gone" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_auth"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/text_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="수정하기"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.cardview.widget.CardView
                 android:id="@+id/btn_upload_profile"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 app:cardCornerRadius="99dp"
-                app:cardElevation="0dp">
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_edit">
 
-            <FrameLayout
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#E3E3E3">
 
-                <ImageView
+                    <ImageView
                         android:id="@+id/image_profile"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
 
-                <TextView
-                        android:id="@+id/text_upload"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text=""/>
+                </FrameLayout>
+            </androidx.cardview.widget.CardView>
 
-            </FrameLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <TextView
+            <TextView
                 android:id="@+id/text_name"
+                style="@style/TextAppearance.NT.Subtitle2_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="18dp"
                 android:layout_marginTop="18dp"
-                android:text="이름"/>
-        <TextView
-                android:id="@+id/galleryphoto"
+                android:layout_marginBottom="18dp"
+                android:text="이름"
+                app:layout_constraintEnd_toEndOf="@id/btn_upload_profile"
+                app:layout_constraintStart_toStartOf="@id/btn_upload_profile"
+                app:layout_constraintTop_toBottomOf="@id/btn_upload_profile" />
+
+            <TextView
+                android:id="@+id/text_my_photo"
+                style="@style/TextAppearance.NT.Subtitle2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="18dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginRight="115dp"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:text="나의사진"/>
-        <TextView
-                android:id="@+id/maximize"
+                android:layout_marginBottom="16dp"
+                android:text="나의사진"
+                app:layout_constraintBottom_toTopOf="@id/recyclerView"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/text_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="18dp"
-                android:layout_marginLeft="115dp"
-                android:text="전체보기"/>
-        <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginBottom="16dp"
+                android:text="전체보기"
+                app:layout_constraintBottom_toTopOf="@id/recyclerView"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-        />
-        <Button
-                android:id="@+id/btn_auth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="로그아웃"/>
+                android:layout_height="0dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginBottom="16dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_name"
+                app:spanCount="3"
+                tools:listitem="@layout/item_my_photo" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
+    </FrameLayout>
 
-    </LinearLayout>
-</RelativeLayout>
+    <Button
+        android:id="@+id/btn_auth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="로그아웃"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
