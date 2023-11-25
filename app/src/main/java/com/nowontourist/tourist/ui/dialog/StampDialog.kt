@@ -1,4 +1,4 @@
-package com.nowontourist.tourist.ui.stamp
+package com.nowontourist.tourist.ui.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +13,7 @@ class StampDialog: DialogFragment() {
     private var _binding: DialogStampBinding? = null
     private val binding get() = _binding!!
     private val adapter by lazy { StampBoxAdapter() }
+    private val infoDialog by lazy { InfoDialog() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,6 +29,18 @@ class StampDialog: DialogFragment() {
                 Stamp(1, "제목1", "https://cdn.pixabay.com/photo/2023/10/20/13/49/beach-8329531_640.jpg", true),
                 Stamp(1, "제목1", "https://cdn.pixabay.com/photo/2023/11/08/20/11/mountains-8375693_1280.jpg", true),
             )
+        }
+
+        adapter.setOnItemClickListener {
+
+            infoDialog.show(parentFragmentManager, "info")
+            infoDialog.setData(Info(
+                "제목",
+                "장소",
+                "설명",
+                "https://cdn.pixabay.com/photo/2023/11/10/17/00/mountains-8379756_640.jpg",
+
+                ))
         }
     }
 

@@ -1,4 +1,4 @@
-package com.nowontourist.tourist.ui.stamp
+package com.nowontourist.tourist.ui.dialog
 
 data class Stamp(
     val id: Int,

@@ -1,4 +1,4 @@
-package com.nowontourist.tourist.ui.stamp
+package com.nowontourist.tourist.ui.dialog
 
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +14,11 @@ class StampBoxAdapter: RecyclerView.Adapter<StampBoxAdapter.ViewHolder>() {
             notifyDataSetChanged()
         }
 
+    private var onClickListener: (() -> Unit)? = null
+    fun setOnItemClickListener(onClickListener: () -> Unit) {
+        this.onClickListener = onClickListener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemStampBoxBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
@@ -23,6 +28,7 @@ class StampBoxAdapter: RecyclerView.Adapter<StampBoxAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(list[position])
+        holder.itemView.setOnClickListener { onClickListener?.invoke() }
     }
 
     inner class ViewHolder(val binding: ItemStampBoxBinding) : RecyclerView.ViewHolder(binding.root) {
