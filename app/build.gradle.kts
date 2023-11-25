@@ -5,6 +5,7 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.devtools.ksp")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -45,11 +46,16 @@ android {
 dependencies {
 
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.security:security-crypto:1.0.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
+    // Material Design
     implementation("com.google.android.material:material:1.10.0")
+
+    // Flex
     implementation("com.google.android.flexbox:flexbox:3.0.0")
+
+    // EncryptedSharedPreference
+    implementation("androidx.security:security-crypto:1.0.0")
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.48.1")
@@ -76,9 +82,9 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-storage")
-    implementation("com.firebaseui:firebase-ui-storage:8.0.2")
+    implementation("com.firebaseui:firebase-ui-storage:8.0.2") // FirebaseImageLoader
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
-    ksp("com.github.bumptech.glide:ksp:4.16.0")
+    ksp("com.github.bumptech.glide:ksp:4.16.0") // GlideModule
 }

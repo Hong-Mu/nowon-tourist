@@ -5,6 +5,9 @@
     <color name="gray">#767676</color>
     <color name="black">#000000</color>
 
+    <color name="gray_transparent">#80767676</color>
+
+
     <color name="purple_light">#7F7F9C</color>
     <color name="purple">#4C4C6D</color>
     <color name="cyan">#E8F6EF</color>
@@ -12,4 +15,5 @@
     <color name="green">#1B9C85</color>
     <color name="yellow">#FFCB44</color>
     <color name="orange">#FF903F</color>
+
 </resources>
