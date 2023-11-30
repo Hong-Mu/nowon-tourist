@@ -38,6 +38,15 @@ fun FirebaseStorage.uploadGallery(docId: String, uri: Uri): UploadTask {
     return imageRef.putFile(uri)
 }
 
+fun FirebaseStorage.getStampRef(uid: String?, stampId: Int): StorageReference {
+    return getReference("stamp/${uid?:"Unknown"}/$stampId")
+}
+
+fun FirebaseStorage.uploadStamp(uid: String?, stampId: Int, uri: Uri): UploadTask {
+    val imageRef = getStampRef(uid, stampId)
+    return imageRef.putFile(uri)
+}
+
 val firebaseAuth get() = Firebase.auth
 val firebaseDatabase get() = Firebase.firestore
 val firebaseStorage get() = Firebase.storage
