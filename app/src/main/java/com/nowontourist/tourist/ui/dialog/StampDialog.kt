@@ -19,11 +19,14 @@ import com.nowontourist.tourist.util.uploadStamp
 
 class StampDialog: DialogFragment() {
 
+    companion object {
+        var stampMap: Map<String, Boolean>? = null
+    }
+
     private var _binding: DialogStampBinding? = null
     private val binding get() = _binding!!
     val adapter by lazy { StampBoxAdapter() }
     private val infoDialog by lazy { InfoDialog() }
-    private var stampMap: Map<String, Boolean>? = null
 
     private var imageUri: Uri? = null
     private var stampId = 0
@@ -78,7 +81,7 @@ class StampDialog: DialogFragment() {
     }
 
     fun setData(map: Map<String, Boolean>) {
-        this.stampMap = map
+        stampMap = map
         adapter.list = getList()
     }
 
