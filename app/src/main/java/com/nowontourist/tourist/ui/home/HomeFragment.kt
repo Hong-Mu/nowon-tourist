@@ -8,11 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.nowontourist.tourist.R
 import com.nowontourist.tourist.databinding.FragmentHomeBinding
+import com.nowontourist.tourist.databinding.ItemStampBinding
+import com.nowontourist.tourist.ui.MainViewModel
 import com.nowontourist.tourist.ui.dialog.StampDialog
 import com.nowontourist.tourist.ui.gallery.GalleryItem
 import com.nowontourist.tourist.util.firebaseDatabase
@@ -20,9 +23,10 @@ import java.util.Calendar
 import java.util.Date
 
 class HomeFragment : Fragment() {
-
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: MainViewModel by activityViewModels()
+
     private lateinit var eventAdapter: EventAdapter
     private val stampDialog by lazy { StampDialog() }
     private lateinit var auth: FirebaseAuth
@@ -35,8 +39,15 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         auth = Firebase.auth
 
+        val stampList = listOf(
+            binding.stamp1, binding.stamp2,
+            binding.stamp3, binding.stamp4,
+            binding.stamp5, binding.stamp6,
+            binding.stamp7,
+        )
+
         initMonth()
-        initStamp()
+        initStamp(stampList)
         initEventAdapter()
 
         firebaseDatabase.collection("event").addSnapshotListener { snapshot, error ->
@@ -51,6 +62,20 @@ class HomeFragment : Fragment() {
             }
         }
 
+        viewModel.stamps.observe(viewLifecycleOwner) {
+            stampDialog.setData(it)
+
+            stampList.forEachIndexed { index, itemStampBinding ->
+                val isStamped = it["${index + 1}"]?:false
+                if(isStamped) {
+                    itemStampBinding.imageStamp.visibility = View.VISIBLE
+                    itemStampBinding.textStampId.text = ""
+                } else {
+                    itemStampBinding.imageStamp.visibility = View.INVISIBLE
+                    itemStampBinding.textStampId.text = "${index + 1}"
+                }
+            }
+        }
     }
 
     private fun initMonth() {
@@ -79,13 +104,8 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun initStamp() {
-        val stampList = listOf(
-            binding.stamp1, binding.stamp2,
-            binding.stamp3, binding.stamp4,
-            binding.stamp5, binding.stamp6,
-            binding.stamp7,
-        )
+    private fun initStamp(stampList: List<ItemStampBinding>) {
+
 
         stampList.forEachIndexed { index, itemStampBinding ->
             itemStampBinding.textStampId.text = "${index + 1}"

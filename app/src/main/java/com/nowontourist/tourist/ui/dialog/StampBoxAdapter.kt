@@ -14,9 +14,14 @@ class StampBoxAdapter: RecyclerView.Adapter<StampBoxAdapter.ViewHolder>() {
             notifyDataSetChanged()
         }
 
-    private var onClickListener: (() -> Unit)? = null
-    fun setOnItemClickListener(onClickListener: () -> Unit) {
-        this.onClickListener = onClickListener
+    private var onItemClickListener: ((Int) -> Unit)? = null
+    fun setOnItemClickListener(onItemClickListener: (Int) -> Unit) {
+        this.onItemClickListener = onItemClickListener
+    }
+
+    private var onStampButtonClickListener: ((Int) -> Unit)? = null
+    fun setOnStampButtonClickListener(listener: (Int) -> Unit) {
+        this.onStampButtonClickListener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,12 +32,12 @@ class StampBoxAdapter: RecyclerView.Adapter<StampBoxAdapter.ViewHolder>() {
     override fun getItemCount() = list.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position])
-        holder.itemView.setOnClickListener { onClickListener?.invoke() }
+        holder.bind(list[position], position)
+        holder.itemView.setOnClickListener { onItemClickListener?.invoke(position) }
     }
 
     inner class ViewHolder(val binding: ItemStampBoxBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Stamp) {
+        fun bind(item: Stamp, position: Int) {
             binding.textTitle.text = item.title
 
             Glide.with(binding.imagePreview)
@@ -40,6 +45,8 @@ class StampBoxAdapter: RecyclerView.Adapter<StampBoxAdapter.ViewHolder>() {
                 .into(binding.imagePreview)
 
             bindStamp(item)
+
+            binding.btnStamp.setOnClickListener { onStampButtonClickListener?.invoke(position) }
         }
 
         private fun bindStamp(item: Stamp){

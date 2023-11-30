@@ -15,7 +15,8 @@ object FirebaseUtil {
 
     const val KEY_EMAIL = "email"
     const val KEY_NAME = "name"
-
+    const val KEY_STAMPS = "stamps"
+    const val KEY_AUTHOR = "author"
 
 }
 
@@ -34,6 +35,15 @@ fun FirebaseStorage.getGalleryRef(docId: String?): StorageReference {
 
 fun FirebaseStorage.uploadGallery(docId: String, uri: Uri): UploadTask {
     val imageRef = getGalleryRef(docId)
+    return imageRef.putFile(uri)
+}
+
+fun FirebaseStorage.getStampRef(uid: String?, stampId: Int): StorageReference {
+    return getReference("stamp/${uid?:"Unknown"}/$stampId")
+}
+
+fun FirebaseStorage.uploadStamp(uid: String?, stampId: Int, uri: Uri): UploadTask {
+    val imageRef = getStampRef(uid, stampId)
     return imageRef.putFile(uri)
 }
 

@@ -5,9 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nowontourist.tourist.databinding.ItemMyPhotoBinding
+import com.nowontourist.tourist.ui.gallery.GalleryItem
+import com.nowontourist.tourist.util.firebaseDatabase
+import com.nowontourist.tourist.util.firebaseStorage
+import com.nowontourist.tourist.util.getGalleryRef
 
 class MyPhotoAdapter() : RecyclerView.Adapter<MyPhotoAdapter.ViewHolder>() {
-    var list = listOf<MyPhoto>()
+    var list = listOf<GalleryItem>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -15,8 +19,11 @@ class MyPhotoAdapter() : RecyclerView.Adapter<MyPhotoAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: ItemMyPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: MyPhoto) {
-            Glide.with(binding.root.context).load(item.photoUrl).into(binding.imageView)
+        fun bind(item: GalleryItem) {
+
+            Glide.with(binding.root)
+                .load(firebaseStorage.getGalleryRef(item.id))
+                .into(binding.imageView)
         }
     }
 
