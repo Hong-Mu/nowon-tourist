@@ -1,10 +1,12 @@
 package com.nowontourist.tourist.ui.home
 
 import android.content.res.ColorStateList
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.Fragment
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -12,6 +14,8 @@ import com.google.firebase.auth.auth
 import com.nowontourist.tourist.R
 import com.nowontourist.tourist.databinding.FragmentHomeBinding
 import com.nowontourist.tourist.ui.dialog.StampDialog
+import com.nowontourist.tourist.ui.gallery.GalleryItem
+import com.nowontourist.tourist.util.firebaseDatabase
 import java.util.Calendar
 import java.util.Date
 
@@ -23,6 +27,10 @@ class HomeFragment : Fragment() {
     private val stampDialog by lazy { StampDialog() }
     private lateinit var auth: FirebaseAuth
 
+    private val tabsIntent by lazy { CustomTabsIntent.Builder().build() }
+
+    private val originMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         auth = Firebase.auth
@@ -30,6 +38,19 @@ class HomeFragment : Fragment() {
         initMonth()
         initStamp()
         initEventAdapter()
+
+        firebaseDatabase.collection("event").addSnapshotListener { snapshot, error ->
+            if(error != null) return@addSnapshotListener
+
+            if(snapshot != null && !snapshot.isEmpty) {
+                val list = snapshot.documents.map {
+                    it.toObject(Event::class.java)!!
+                }
+                eventAdapter.originList = list
+                eventAdapter.filterByMonth(originMonth)
+            }
+        }
+
     }
 
     private fun initMonth() {
@@ -53,6 +74,7 @@ class HomeFragment : Fragment() {
                 textView.backgroundTintList = orange
                 prevIndex = index
                 // 이벤트 목록 업데이트
+                eventAdapter.filterByMonth(month)
             }
         }
     }
@@ -79,18 +101,12 @@ class HomeFragment : Fragment() {
     private fun initEventAdapter() {
         val onClickListener = object : EventAdapter.OnItemClickListener {
             override fun onClick(position: Int) {
-
+                tabsIntent.launchUrl(requireContext(), Uri.parse(eventAdapter.list[position].url) )
             }
         }
 
         eventAdapter = EventAdapter(onClickListener).apply {
-            list = listOf(
-                Event("빛조각 페스티벌", "설명", "https://url.com", Date(), Date(), "당현천 산택길"),
-                Event("빛조각 페스티벌", "설명", "https://url.com", Date(), Date(), "당현천 산택길"),
-                Event("빛조각 페스티벌", "설명", "https://url.com", Date(), Date(), "당현천 산택길"),
-                Event("빛조각 페스티벌", "설명", "https://url.com", Date(), Date(), "당현천 산택길"),
-                Event("빛조각 페스티벌", "설명", "https://url.com", Date(), Date(), "당현천 산택길"),
-            )
+            list = listOf()
         }
 
         binding.rvEvent.adapter = eventAdapter

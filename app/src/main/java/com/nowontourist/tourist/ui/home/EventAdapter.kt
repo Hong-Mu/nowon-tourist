@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nowontourist.tourist.databinding.ItemEventBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class EventAdapter(val onItemClickListener: OnItemClickListener) : RecyclerView.Adapter<EventAdapter.ViewHolder>() {
     var list: List<Event> = listOf()
@@ -11,6 +13,19 @@ class EventAdapter(val onItemClickListener: OnItemClickListener) : RecyclerView.
             field = value
             notifyDataSetChanged()
         }
+
+    var originList: List<Event> = listOf()
+
+    private val format = SimpleDateFormat("MM.dd(E)", Locale.getDefault())
+
+    fun filterByMonth(month: Int) { // TODO 상당히 조악하지만 그냥 간다
+        val temp = originList
+            .filter { it.startDate?.month?.plus(1) == month || it.endDate?.month?.plus(1) == month}
+            .sortedBy { it.startDate }
+
+        list = temp
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemEventBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -27,7 +42,7 @@ class EventAdapter(val onItemClickListener: OnItemClickListener) : RecyclerView.
     inner class ViewHolder(val binding: ItemEventBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Event) {
             binding.textTitle.text = item.title
-            binding.textPeriod.text = item.startDate.toString()
+            binding.textPeriod.text = "${format.format(item.startDate)}-${format.format(item.endDate)}"
             binding.textLocation.text = item.location
         }
     }
