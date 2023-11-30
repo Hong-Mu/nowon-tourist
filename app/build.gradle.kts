@@ -87,4 +87,7 @@ dependencies {
     // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
     ksp("com.github.bumptech.glide:ksp:4.16.0") // GlideModule
+
+    // Custum Tab
+    implementation("androidx.browser:browser:1.7.0")
 }
