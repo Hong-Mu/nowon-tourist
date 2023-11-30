@@ -14,8 +14,8 @@ class StampBoxAdapter: RecyclerView.Adapter<StampBoxAdapter.ViewHolder>() {
             notifyDataSetChanged()
         }
 
-    private var onItemClickListener: (() -> Unit)? = null
-    fun setOnItemClickListener(onItemClickListener: () -> Unit) {
+    private var onItemClickListener: ((Int) -> Unit)? = null
+    fun setOnItemClickListener(onItemClickListener: (Int) -> Unit) {
         this.onItemClickListener = onItemClickListener
     }
 
@@ -33,7 +33,7 @@ class StampBoxAdapter: RecyclerView.Adapter<StampBoxAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(list[position], position)
-        holder.itemView.setOnClickListener { onItemClickListener?.invoke() }
+        holder.itemView.setOnClickListener { onItemClickListener?.invoke(position) }
     }
 
     inner class ViewHolder(val binding: ItemStampBoxBinding) : RecyclerView.ViewHolder(binding.root) {
