@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.bumptech.glide.Glide
 import com.nowontourist.tourist.databinding.DialogInfoBinding
 
 class InfoDialog: DialogFragment() {
@@ -28,6 +29,9 @@ class InfoDialog: DialogFragment() {
         info?.let {
             binding.textTitle.text = it.title
             binding.textContent.text = it.description
+            Glide.with(binding.root)
+                .load(it.imageUrl)
+                .into(binding.imageMain)
         }
     }
 

@@ -15,6 +15,7 @@ object FirebaseUtil {
 
     const val KEY_EMAIL = "email"
     const val KEY_NAME = "name"
+    const val KEY_STAMPS = "stamps"
 
 
 }

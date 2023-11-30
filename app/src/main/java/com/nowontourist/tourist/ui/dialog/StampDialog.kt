@@ -12,8 +12,9 @@ class StampDialog: DialogFragment() {
 
     private var _binding: DialogStampBinding? = null
     private val binding get() = _binding!!
-    private val adapter by lazy { StampBoxAdapter() }
+    val adapter by lazy { StampBoxAdapter() }
     private val infoDialog by lazy { InfoDialog() }
+    private var stampMap: Map<String, Boolean>? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -21,13 +22,13 @@ class StampDialog: DialogFragment() {
 
         binding.rvStamp.adapter = adapter.apply {
             list = listOf(
-                Stamp(1, "제목1", "https://cdn.pixabay.com/photo/2023/11/10/17/00/mountains-8379756_640.jpg", true),
-                Stamp(1, "제목1", "https://cdn.pixabay.com/photo/2023/11/12/15/42/flowers-8383322_640.jpg", true),
-                Stamp(1, "제목1", "https://cdn.pixabay.com/photo/2023/09/09/12/38/fisherman-8243136_640.jpg", false),
-                Stamp(1, "제목1", "https://cdn.pixabay.com/photo/2023/09/16/18/18/wallpaper-8257343_640.png", true),
-                Stamp(1, "제목1", "https://cdn.pixabay.com/photo/2023/10/28/09/20/darling-8346954_640.jpg", false),
-                Stamp(1, "제목1", "https://cdn.pixabay.com/photo/2023/10/20/13/49/beach-8329531_640.jpg", true),
-                Stamp(1, "제목1", "https://cdn.pixabay.com/photo/2023/11/08/20/11/mountains-8375693_1280.jpg", true),
+                Stamp(1, "노원 불빛정원", "https://www.nowon.kr/resources/www/images/info/img-nowon_light07.gif", stampMap?.get("1")?:false),
+                Stamp(2, "아바타트리", "https://www.nowon.kr/resources/www/images/info/img-healing-gc07.gif", stampMap?.get("2")?:false),
+                Stamp(3, "경춘선숲길 갤러리", "https://www.nowon.kr/resources/www/images/info/img-healing-gc06.gif", stampMap?.get("3")?:false),
+                Stamp(4, "Cafe 기차가 있는 풍경", "https://www.nowon.kr/resources/www/images/info/img-healing-gc12.gif", stampMap?.get("4")?:false),
+                Stamp(5, "타임뮤지엄", "https://www.nowon.kr/resources/www/images/info/img-healing-gc13.gif", stampMap?.get("5")?:false),
+                Stamp(6, "노원기차마을", "https://www.nowon.kr/resources/www/images/info/img-healing-gc16.gif", stampMap?.get("6")?:false),
+                Stamp(7, "경춘선철길", "https://www.nowon.kr/resources/www/images/info/img-healing-gc10.gif", stampMap?.get("7")?:false),
             )
         }
 
@@ -44,8 +45,8 @@ class StampDialog: DialogFragment() {
         }
     }
 
-    fun setItem(item: Event) {
-
+    fun setData(map: Map<String, Boolean>) {
+        this.stampMap = map
     }
 
     override fun onCreateView(
