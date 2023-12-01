@@ -72,10 +72,11 @@ dependencies {
 
     // Google Services
     implementation("com.google.android.play:core:1.10.3")
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.play:core-ktx:1.8.1")
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
     implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
-    implementation("com.google.maps.android:android-maps-utils:3.8.0")
+    implementation("com.google.maps.android:android-maps-utils:3.4.0")
 
     // Firebase (32.5.0 부터 KTX 미지원)
     implementation(platform("com.google.firebase:firebase-bom:32.5.0"))

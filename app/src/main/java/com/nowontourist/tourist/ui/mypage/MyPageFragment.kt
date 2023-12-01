@@ -86,8 +86,8 @@ class MyPageFragment : Fragment() {
         firebaseAuth.currentUser?.let {
             val imageRef = firebaseStorage.getUserProfileRef(firebaseAuth.currentUser?.uid)
             Glide.with(this).load(imageRef)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
+                //.diskCacheStrategy(DiskCacheStrategy.NONE)
+                //.skipMemoryCache(true)
                 .into(binding.imageProfile)
         }
     }

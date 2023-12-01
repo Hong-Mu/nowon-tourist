@@ -29,9 +29,6 @@
             android:name=".ui.gallery.GalleryDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".EditInformationActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.auth.InputProfileActivity"
             android:exported="false" />
         <activity
@@ -48,6 +45,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.SplashActivity"
+            android:theme="@style/Theme.Full"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,6 +53,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
